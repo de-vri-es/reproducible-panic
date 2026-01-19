@@ -1,0 +1,17 @@
+[package]
+name = "reproducible-panic"
+version = "0.1.0"
+description = "panic hook with reproducible output"
+license = "BSD-2-Clause"
+authors = ["Maarten de Vries <maarten@de-vri.es>"]
+
+rust-version = "1.85"
+edition = "2024"
+
+repository = "https://github.com/de-vri-es/reproducible-panic"
+documentation = "https://docs.rs/reproducible-panic"
+readme = "README.md"
+keywords = ["panic", "hook", "info", "reproducible", "stable"]
+categories = ["development-tools::testing"]
+
+[dependencies]
