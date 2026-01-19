@@ -5,8 +5,9 @@ description = "panic hook with reproducible output"
 license = "BSD-2-Clause"
 authors = ["Maarten de Vries <maarten@de-vri.es>"]
 
-rust-version = "1.85"
-edition = "2024"
+rust-version = "1.70"
+edition = "2021"
+publish = ["crates-io"]
 
 repository = "https://github.com/de-vri-es/reproducible-panic"
 documentation = "https://docs.rs/reproducible-panic"

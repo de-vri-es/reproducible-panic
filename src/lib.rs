@@ -7,7 +7,7 @@
 //!
 //! # Example
 //!
-//! ```rust
+//! ```rust,should_panic
 //! fn main() {
 //!   reproducible_panic::install();
 //!   panic!("Oh no!");
