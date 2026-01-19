@@ -30,9 +30,14 @@
 //!
 //! Note the "12993" in the output. This number will be different every time you run the program, ruining your snapshot tests.
 
-#![allow(clippy::needless_doctest_main, reason = "included to show intended use in a full program")]
+// The `fn main()` is included to show intended use in a full program.
+#![allow(clippy::needless_doctest_main)]
 
-use std::panic::PanicHookInfo;
+// Need to use the deprecated `std::panic::PanicInfo` to support Rust 1.70.
+#![allow(deprecated)]
+
+use std::panic::PanicInfo as PanicHookInfo;
+
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::io::Write;
 
@@ -49,7 +54,7 @@ pub fn install() {
 pub fn panic_hook(info: &PanicHookInfo<'_>) {
 	let backtrace = std::backtrace::Backtrace::capture();
 	let location = info.location();
-	let msg = info.payload_as_str();
+	let msg = payload_as_str(info);
 	let current_thread = std::thread::current();
 	let thread_name = current_thread.name().unwrap_or("<unnamed>");
 	let mut stderr = std::io::stderr().lock();
@@ -92,5 +97,15 @@ pub fn panic_hook(info: &PanicHookInfo<'_>) {
 		}
 		std::backtrace::BacktraceStatus::Unsupported => (),
 		_ => (),
+	}
+}
+
+pub fn payload_as_str<'a>(info: &'a PanicHookInfo<'a>) -> Option<&'a str> {
+	if let Some(s) = info.payload().downcast_ref::<&str>() {
+		Some(s)
+	} else if let Some(s) = info.payload().downcast_ref::<String>() {
+		Some(s)
+	} else {
+		None
 	}
 }
